@@ -9,6 +9,8 @@ import java.util.List;
 
 import dao.ContatoDao;
 import dao.ConnectionFactory;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import modelo.Contato;
 
 public class ContatoImpl implements ContatoDao {
@@ -20,7 +22,8 @@ public class ContatoImpl implements ContatoDao {
 	@Override
 	public void salvar(Contato contato) {
 		try {
-			String sql = "insert into contato (nome, telefone) values(?,?)";
+			String sql = "insert into contato "
+                                + "(nome, telefone) values(?,?)";
 			
 			stmt = conn.prepareStatement(sql);
 			
@@ -35,15 +38,36 @@ public class ContatoImpl implements ContatoDao {
 	}
 
 	@Override
-	public void atualizar(Contato autor) {
+	public void atualizar(Contato  contato) {
 		// TODO Auto-generated method stub
-
+            String sql = "update contato set nome = ?, telefone = ? "
+                    + "where id = ?";
+            try {
+                stmt = conn.prepareStatement(sql);
+                
+                stmt.setString(1, contato.getNome());
+                stmt.setString(2, contato.getTelefone());
+                stmt.setInt(3, contato.getId());
+                
+                stmt.executeUpdate();
+                
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
 	}
 
 	@Override
-	public void remover(Contato autor) {
+	public void remover(Contato contato) {
 		// TODO Auto-generated method stub
-
+            String sql = "delete from contato where id = ?";
+            try {
+                stmt = conn.prepareStatement(sql);
+                stmt.setInt(1, contato.getId());
+                
+                stmt.execute();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
 	}
 
 	@Override
@@ -53,12 +77,11 @@ public class ContatoImpl implements ContatoDao {
 			String sql = "select id, nome, telefone from contato";
 			stmt = conn.prepareStatement(sql);
 			rs = stmt.executeQuery();
-			
 			while(rs.next()){
 				Contato contato = new Contato();
-				contato.setId(rs.getInt("id"));
-				contato.setNome(notNull(rs.getString("nome")));
-                                contato.setTelefone(notNull(rs.getString("telefone")));
+				contato.setId(rs.getInt(1));
+				contato.setNome(notNull(rs.getString(2)));
+                                contato.setTelefone(notNull(rs.getString(3)));
 				
 				list.add(contato);
 			}
@@ -77,9 +100,9 @@ public class ContatoImpl implements ContatoDao {
                     stmt.setInt(1, id);
                     rs = stmt.executeQuery();
                     rs.next();
-                    contato.setId(rs.getInt("id"));
-                    contato.setNome(notNull(rs.getString("nome")));
-                    contato.setTelefone(notNull(rs.getString("telefone")));
+                    contato.setId(rs.getInt(1));
+                    contato.setNome(notNull(rs.getString(2)));
+                    contato.setTelefone(notNull(rs.getString(3)));
                 }catch (SQLException e) {
 			e.printStackTrace();
 		}

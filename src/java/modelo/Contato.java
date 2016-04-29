@@ -11,16 +11,16 @@ package modelo;
  */
 public class Contato {
     private int id;
+    private String nome, telefone;
 
-    public int getId() {
+     public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
     }
-    private String nome, telefone;
-
+    
     public String getNome() {
         return nome;
     }
