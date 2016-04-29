@@ -10,7 +10,7 @@ public class Main {
 
 	public static void main(String[] args) {
                 ContatoImpl contatoImpl = new ContatoImpl();
-		List<Contato> list = contatoImpl.getListAll();
+		
                 Scanner in = new Scanner(System.in);
                 for (int i = 0; i < 3; i++) {
                     Contato c = new Contato();
@@ -22,7 +22,7 @@ public class Main {
                     
                     contatoImpl.salvar(c);
                 }
-                
+                List<Contato> list = contatoImpl.getListAll();
 		String msg = ("ID\t"+f("Nome")+"\t"+f("Telefone"));
 		System.out.println(msg);
 		for (int i = 0; i < msg.length(); i++) {
@@ -39,7 +39,7 @@ public class Main {
 			System.out.print("-");
 		}
 		System.out.println();
-		System.out.println(a.getId()+"\t"+f(a.getNome()));
+		System.out.println(a.getId()+"\t"+f(a.getNome())+"\t"+a.getTelefone());
 	}
 
 	private static String f(String s) {
@@ -50,8 +50,8 @@ public class Main {
 	}
 
 	private static void out(List<Contato> list) {
-		for (Contato autor : list) {
-			System.out.println(autor.getId()+"\t"+f(autor.getNome())+"\t"+autor.getTelefone());
+		for (Contato contato : list) {
+			System.out.println(contato.getId()+"\t"+f(contato.getNome())+"\t"+contato.getTelefone());
 		}
 		
 	}
