@@ -12,10 +12,13 @@
         <title>JSP Page</title>
     </head>
     <body>
+        <%@include file="index.html" %>
         <h1>Adiconar Estado</h1>
         <form action="cadastrarestado" method="POST">
             Estado: <input type="text" name="estado"/>
             <input type="submit" value="Adicionar"/>
+            <a href="listar.jsp">Cancelar</a>
+            <a href="index.html">Inicio</a>
         </form>
     </body>
 </html>

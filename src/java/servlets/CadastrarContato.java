@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import modelo.Cidade;
 import modelo.Contato;
 
 /**
@@ -75,16 +76,26 @@ public class CadastrarContato extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Contato contato = new Contato();//cria o objeto contato
+        int id=0;
+        if(request.getParameter("id") != null)
+            id = Integer.valueOf(request.getParameter("id"));
         
         //preenche o objeto contato
         contato.setNome(request.getParameter("nome"));
         contato.setTelefone(request.getParameter("telefone"));
+        Cidade cidade = new Cidade();
+        cidade.setId(Integer.valueOf(request.getParameter("cidade")));
+        contato.setCidade(cidade);
         ContatoImpl contatoDao = new ContatoImpl();//cria o objeto contatoDao
         
-        //salva
-        contatoDao.salvar(contato);
+        //salva ou altera
+        if(id != 0){
+            contato.setId(id);
+            contatoDao.atualizar(contato);
+        }else
+            contatoDao.salvar(contato);
         //retorna pra a tela de cadastro
-        response.sendRedirect("cadastrar.jsp");
+        response.sendRedirect("listar.jsp");
         
     }
 

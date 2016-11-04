@@ -16,22 +16,25 @@
         <title>Cidades</title>
     </head>
     <body>
+        <%@include file="index.html" %>
         <h1>Adicionar Cidade</h1>
         <form action="cadastrarcidade" method="POST">
-            
+
             <%
                 EstadoImpl estadoImpl = new EstadoImpl();
                 List<Estado> list = estadoImpl.getListAll();
             %>
-            
+
             Estado:
             <select name="estado">
-                <% for (Estado e : list){ %>
+                <% for (Estado e : list) {%>
                 <option value="<%=e.getId()%>"><%=e.getNome()%></option>
                 <%}%>
             </select><br>
             Cidade:<input type="text" name="cidade"/><br>
             <input type="submit" value="Adcionar Cidade"/>
+            <a href="listar.jsp">Cancelar</a>
+            <a href="index.html">Inicio</a>
         </form>
     </body>
 </html>

@@ -16,6 +16,7 @@
         <title>Lista de Contatos</title>
     </head>
     <body>
+        <%@include file="index.html" %>
         <h1>Contatos</h1>
         <div>
             <table>
@@ -23,6 +24,9 @@
                     <td>ID</td>
                     <td>NOME</td>
                     <td>TELEFONE</td>
+                    <td>CIDADE</td>
+                    <td>ESTADO</td>
+                    <td>AÇÃO</td>
                 </tr>
                 <%
                     ContatoImpl contatoImpl = new ContatoImpl();
@@ -33,11 +37,15 @@
                             <td><%= c.getId() %></td>
                             <td><%= c.getNome()%></td>
                             <td><%= c.getTelefone()%></td>
+                            <td><%= c.getCidade().getNome()%></td>
+                            <td><%= c.getCidade().getEstado().getNome()%></td>
+                            <td><a href="alterarcontato.jsp?id=<%= c.getId()%>">editar</a></td>
                         </tr>
                         <%
                     }
                 %>
             </table>
+            <a href="index.html">Inicio</a>
         </div>
     </body>
 </html>

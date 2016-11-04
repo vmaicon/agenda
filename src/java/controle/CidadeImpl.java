@@ -99,8 +99,8 @@ public class CidadeImpl implements CidadeDao {
 
     @Override
     public Cidade findById(int id) {
-        String sql = "SELECT id, nome, idestado, estado.nome FROM cidade, estado "
-                + " WHERE idestado = estado.id AND id = ?";
+        String sql = "SELECT cidade.id, cidade.nome, cidade.idestado, estado.nome FROM cidade, estado "
+                + " WHERE cidade.idestado = estado.id AND cidade.id = ?";
         Cidade c = new Cidade();
         try {
             stmt = conn.prepareStatement(sql);
@@ -109,10 +109,10 @@ public class CidadeImpl implements CidadeDao {
             
             rs.next();
             c.setId(rs.getInt(1));
-            c.setNome(rs.getString(2));
+            c.setNome(notNull(rs.getString(2)));
             
             c.getEstado().setId(rs.getInt(3));
-            c.getEstado().setNome(rs.getString(4));
+            c.getEstado().setNome(notNull(rs.getString(4)));
             
         } catch (SQLException ex) {
             Logger.getLogger(CidadeImpl.class.getName()).log(Level.SEVERE, null, ex);
@@ -120,5 +120,9 @@ public class CidadeImpl implements CidadeDao {
         }
         
         return c;
+    }
+    
+    public String notNull(String msg){
+        return (msg == null? "" : msg);
     }
 }

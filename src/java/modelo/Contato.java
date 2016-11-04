@@ -12,6 +12,15 @@ package modelo;
 public class Contato {
     private int id;
     private String nome, telefone;
+    private Cidade cidade;
+
+    public Cidade getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(Cidade cidade) {
+        this.cidade = cidade;
+    }
 
      public int getId() {
         return id;
